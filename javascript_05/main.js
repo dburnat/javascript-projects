@@ -72,7 +72,7 @@
             onSave,
             onDelete,
             BOUNDARIES = 400,
-            noteConfig = option ||{             //domyslna konfiguracja NOWEJ notatki
+            noteConfig = options ||{             //domyslna konfiguracja NOWEJ notatki
                 content: '',
                 id: "sticker_" + new Date().getTime(),
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)"
