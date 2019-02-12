@@ -13,7 +13,7 @@
         testLocalStorage,
         saveNote,
         deleteNote,
-        loadNotes
+        loadNotes,
         getNoteObject;
     
     onDragStart = function(e){
@@ -61,7 +61,7 @@
             id: el.id,
             transformCSSValue: el.style.transform
         };
-    }
+    };
 
     createNote = function(options){             //parametr options bedzie wykorzystywany do ładowania notatek z pamieci
         let stickerElement = document.createElement('div'),
@@ -72,7 +72,7 @@
             onSave,
             onDelete,
             BOUNDARIES = 400,
-            noteConfig = options ||{             //domyslna konfiguracja NOWEJ notatki
+            noteConfig = options || {             //domyslna konfiguracja NOWEJ notatki
                 content: '',
                 id: "sticker_" + new Date().getTime(),
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)"
@@ -94,6 +94,7 @@
 
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
+
         let transformCSSValue = noteConfig.transformCSSValue;
 
         stickerElement.style.transform = transformCSSValue;
