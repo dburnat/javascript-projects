@@ -64,7 +64,11 @@
         document.body.appendChild(stickerElement);
 
     };
+
+    createNote();
     
+    addNoteBtnElement = document.querySelector('.addNoteBtn');
+    addNoteBtnElement.addEventListener('click' , createNote , false);
     document.addEventListener('mousemove', onDrag, false);
     document.addEventListener('mouseup', onDragEnd, false);
     
