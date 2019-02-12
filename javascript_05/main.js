@@ -84,11 +84,13 @@
             deleteNote(obj);
         };
         onSave = function(){
-
             saveNote(
                 getNoteObject(stickerElement)
             );
         };
+
+        stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
+        textareaElement.value = noteConfig.content; //przypisanie wartości
 
         deleteBtnElement.addEventListener('click' , onDelete);
         saveBtnElement.addEventListener('click' , onSave);
