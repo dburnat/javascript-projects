@@ -12,7 +12,7 @@
         init,
         testLocalStorage,
         saveNote,
-        removeNote,
+        deleteNote,
         loadNotes;
     
     onDragStart = function(e){
@@ -56,13 +56,31 @@
     createNote = function(){
         let stickerElement = document.createElement('div'),
             barElement = document.createElement('div'),
-            textareaElement = document.createElement('textarea');
+            textareaElement = document.createElement('textarea'),
+            saveBtnElement = document.createElement('button'),
+            deleteBtnElement = document.createElement('button'),
+            onSave,
+            onDelete;
 
+        onDelete = function(){
+            let obj = {};
+            deleteNote(obj);
+        };
+        onSave = function(){
+            let obj = {};
+            saveNote(obj);
+        };
+
+        deleteBtnElement.addEventListener('click' , onDelete);
+        saveBtnElement.addEventListener('click' , onSave);
         let transformCSSValue = "translateX(" + Math.random() * 400 + "px) translateY(" + Math.random() * 400 + "px)"; //random position of new notes
 
         stickerElement.style.transform = transformCSSValue;
         stickerElement.classList.add('sticker');
         barElement.classList.add('bar');
+
+        barElement.appendChild(saveBtnElement);
+        barElement.appendChild(deleteBtnElement);
 
         stickerElement.append(barElement);
         stickerElement.append(textareaElement);
@@ -94,7 +112,7 @@
             saveNote = function(note){
 
             };
-            removeNote = function(note){
+            deleteNote = function(note){
 
             }
             loadNotes = function(){
