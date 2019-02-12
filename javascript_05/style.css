@@ -66,3 +66,12 @@ body{
     background-repeat: no-repeat;
     left: 5px;
 }
+
+.addNoteBtn {
+    color: white;
+    font-size: 20px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.44);
+    background: #169178;
+    border: none;
+  }

@@ -1,4 +1,4 @@
-(function (){
+(function () {
     'use strict';
     
     let draggedElement,
@@ -137,15 +137,14 @@
         }
         else{
             saveNote = function(note){
-                localStorage.setItem(note.id, note);
+                localStorage.setItem(note.id, JSON.stringify(note));
             };
             deleteNote = function(note){
 
             }
             loadNotes = function(){
                 for(let i = 0; i < localStorage.length; i++){
-                    let noteObject = 
-                        localStorage.getItem(localStorage.key(i));
+                    let noteObject = JSON.parse(localStorage.getItem(localStorage.key(i)));
                 createNote(noteObject);
                 }
         };
@@ -162,5 +161,4 @@
 
     
     init(); 
-
-    })();
+})();
