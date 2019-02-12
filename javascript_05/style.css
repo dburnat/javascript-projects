@@ -40,3 +40,29 @@ body{
 .sticker:hover{
     z-index: 1;
 }
+
+.deleteButton,
+.saveButton
+{
+    border: none;
+    position: absolute;
+    top: 2px;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+
+.deleteButton{
+    border-radius: 50%;
+    right: 5px;
+    background: #c90d07;
+}
+
+.saveButton{
+    background-color: transparent;
+    background-image: url('img/save-icon.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    left: 5px;
+}

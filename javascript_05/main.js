@@ -73,6 +73,9 @@
 
         deleteBtnElement.addEventListener('click' , onDelete);
         saveBtnElement.addEventListener('click' , onSave);
+
+        saveBtnElement.classList.add('saveButton');
+        deleteBtnElement.classList.add('deleteButton');
         let transformCSSValue = "translateX(" + Math.random() * 400 + "px) translateY(" + Math.random() * 400 + "px)"; //random position of new notes
 
         stickerElement.style.transform = transformCSSValue;
