@@ -85,6 +85,7 @@
 
         onDelete = function(){
             deleteNote(getNoteObject(stickerElement));
+            document.body.removeChild(stickerElement);
         };
         onSave = function(){
             saveNote(
