@@ -60,7 +60,11 @@
         return{
             content: textarea.value,
             id: el.id,
-            transformCSSValue: el.style.transform
+            transformCSSValue: el.style.transform,
+            textarea: {
+                width: textarea.style.width,
+                height: textarea.style.height
+            }
         };
     };
 
@@ -88,6 +92,11 @@
                 getNoteObject(stickerElement)
             );
         };
+
+        if(noteConfig.textarea){
+            textareaElement.style.width = noteConfig.textarea.width;
+            textareaElement.style.height = noteConfig.textarea.height;
+        }
 
         stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
         textareaElement.value = noteConfig.content; //przypisanie wartości
