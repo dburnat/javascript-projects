@@ -96,6 +96,7 @@
         if(noteConfig.textarea){
             textareaElement.style.width = noteConfig.textarea.width;
             textareaElement.style.height = noteConfig.textarea.height;
+            textareaElement.style.resize = 'none';
         }
 
         stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
