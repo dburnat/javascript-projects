@@ -13,7 +13,8 @@
         testLocalStorage,
         saveNote,
         deleteNote,
-        loadNotes;
+        loadNotes
+        getNoteObject;
     
     onDragStart = function(e){
         let boundingClientRect;
@@ -53,22 +54,39 @@
         grabPointY = null;
     };
 
-    createNote = function(){
+    getNoteObject = function(el){           //funkcja używana do pobrania zawartości notatki
+        let textarea = el.querySelector('textarea');
+        return{
+            content: textarea.value,
+            id: el.id,
+            transformCSSValue: el.style.transform
+        };
+    }
+
+    createNote = function(options){             //parametr options bedzie wykorzystywany do ładowania notatek z pamieci
         let stickerElement = document.createElement('div'),
             barElement = document.createElement('div'),
             textareaElement = document.createElement('textarea'),
             saveBtnElement = document.createElement('button'),
             deleteBtnElement = document.createElement('button'),
             onSave,
-            onDelete;
+            onDelete,
+            BOUNDARIES = 400,
+            noteConfig = option ||{             //domyslna konfiguracja NOWEJ notatki
+                content: '',
+                id: "sticker_" + new Date().getTime(),
+                transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)"
+            };
 
         onDelete = function(){
             let obj = {};
             deleteNote(obj);
         };
         onSave = function(){
-            let obj = {};
-            saveNote(obj);
+
+            saveNote(
+                getNoteObject(stickerElement)
+            );
         };
 
         deleteBtnElement.addEventListener('click' , onDelete);
@@ -76,7 +94,7 @@
 
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
-        let transformCSSValue = "translateX(" + Math.random() * 400 + "px) translateY(" + Math.random() * 400 + "px)"; //random position of new notes
+        let transformCSSValue = noteConfig.transformCSSValue;
 
         stickerElement.style.transform = transformCSSValue;
         stickerElement.classList.add('sticker');
@@ -113,7 +131,7 @@
         }
         else{
             saveNote = function(note){
-
+                localStorage.setItem(note.id, note)
             };
             deleteNote = function(note){
 
