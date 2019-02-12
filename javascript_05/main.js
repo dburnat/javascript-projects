@@ -8,7 +8,12 @@
         grabPointX,
         grabPointY,
         createNote,
-        addNoteBtnElement;
+        addNoteBtnElement,
+        init,
+        testLocalStorage,
+        saveNote,
+        removeNote,
+        loadNotes;
     
     onDragStart = function(e){
         let boundingClientRect;
@@ -68,11 +73,45 @@
 
     };
 
-    createNote();
+    testLocalStorage = function(){//sprawdzenie czy mamy dostęp do pamięci lokalnej
+        let foo = 'foo';
+        try {
+            localStorage.setItem(foo,foo);
+            localStorage.removeItem(foo);
+            return true;
+        } 
+        catch (error) {
+            return false;
+        }
+    };
+
+    init = function(){
+
+        if(!testLocalStorage()){
+            let mess = "You can't use localStorage";
+        }
+        else{
+            saveNote = function(note){
+
+            };
+            removeNote = function(note){
+
+            }
+            loadNotes = function(){
+
+        };
+
+        loadNotes();
+        }
+        addNoteBtnElement = document.querySelector('.addNoteBtn');
+        addNoteBtnElement.addEventListener('click' , createNote , false);
+        document.addEventListener('mousemove', onDrag, false);
+        document.addEventListener('mouseup', onDragEnd, false);
+
+    };
+
+
     
-    addNoteBtnElement = document.querySelector('.addNoteBtn');
-    addNoteBtnElement.addEventListener('click' , createNote , false);
-    document.addEventListener('mousemove', onDrag, false);
-    document.addEventListener('mouseup', onDragEnd, false);
-    
+    init(); 
+
     })();
