@@ -14,7 +14,8 @@
         saveNote,
         deleteNote,
         loadNotes,
-        getNoteObject;
+        getNoteObject,
+        onAddNoteBtnClick;
     
     onDragStart = function(e){
         let boundingClientRect;
@@ -95,9 +96,7 @@
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
 
-        let transformCSSValue = noteConfig.transformCSSValue;
-
-        stickerElement.style.transform = transformCSSValue;
+        stickerElement.style.transform = noteConfig.transformCSSValue;
         stickerElement.classList.add('sticker');
         barElement.classList.add('bar');
 
@@ -125,6 +124,10 @@
         }
     };
 
+    onAddNoteBtnClick = function(){
+        createNote();
+    };
+
     init = function(){
 
         if(!testLocalStorage()){
@@ -144,7 +147,7 @@
         loadNotes();
         }
         addNoteBtnElement = document.querySelector('.addNoteBtn');
-        addNoteBtnElement.addEventListener('click' , createNote , false);
+        addNoteBtnElement.addEventListener('click' , onAddNoteBtnClick , false);
         document.addEventListener('mousemove', onDrag, false);
         document.addEventListener('mouseup', onDragEnd, false);
 
