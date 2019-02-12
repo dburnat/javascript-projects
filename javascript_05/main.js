@@ -84,8 +84,7 @@
             };
 
         onDelete = function(){
-            let obj = {};
-            deleteNote(obj);
+            deleteNote(getNoteObject(stickerElement));
         };
         onSave = function(){
             saveNote(
@@ -150,7 +149,7 @@
                 localStorage.setItem(note.id, JSON.stringify(note));
             };
             deleteNote = function(note){
-
+                localStorage.removeItem(note.id);
             }
             loadNotes = function(){
                 for(let i = 0; i < localStorage.length; i++){
