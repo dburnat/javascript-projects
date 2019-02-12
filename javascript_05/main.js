@@ -53,6 +53,9 @@
             barElement = document.createElement('div'),
             textareaElement = document.createElement('textarea');
 
+        let transformCSSValue = "translateX(" + Math.random() * 400 + "px) translateY(" + Math.random() * 400 + "px)"; //random position of new notes
+
+        stickerElement.style.transform = transformCSSValue;
         stickerElement.classList.add('sticker');
         barElement.classList.add('bar');
 
