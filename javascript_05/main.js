@@ -137,13 +137,17 @@
         }
         else{
             saveNote = function(note){
-                localStorage.setItem(note.id, note)
+                localStorage.setItem(note.id, note);
             };
             deleteNote = function(note){
 
             }
             loadNotes = function(){
-
+                for(let i = 0; i < localStorage.length; i++){
+                    let noteObject = 
+                        localStorage.getItem(localStorage.key(i));
+                createNote(noteObject);
+                }
         };
 
         loadNotes();
