@@ -17,6 +17,7 @@
         getNoteObject,
         onAddNoteBtnClick,
         colorArray;
+    colorArray = ["#3498DB", "#DE7213", "#56E92F", "#13D8DE" , "#2F3AE9" , "#B32FE9" ];
     
     onDragStart = function(e){
         let boundingClientRect;
@@ -62,7 +63,6 @@
         grabPointY = null;
     };
     
-    colorArray = ["#3498DB", "#DE7213", "#56E92F", "#13D8DE" , "#2F3AE9" , "#B32FE9" ];
 
     
 
