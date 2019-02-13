@@ -62,7 +62,7 @@
         grabPointY = null;
     };
     
-    colorArray = ["#3498DB", "#E9D52F", "#56E92F", "#2FE9DE" , "#2F3AE9" , "#B32FE9" ];
+    colorArray = ["#3498DB", "#F9CD09", "#56E92F", "#13D8DE" , "#2F3AE9" , "#B32FE9" ];
 
     
 
