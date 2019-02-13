@@ -15,7 +15,8 @@
         deleteNote,
         loadNotes,
         getNoteObject,
-        onAddNoteBtnClick;
+        onAddNoteBtnClick,
+        colorArray;
     
     onDragStart = function(e){
         let boundingClientRect;
@@ -54,9 +55,15 @@
         grabPointX = null;
         grabPointY = null;
     };
+    
+    colorArray = ["#E9432F", "#E9D52F", "#56E92F", "#2FE9DE" , "#2F3AE9" , "#B32FE9" ];
+
+    
+
 
     getNoteObject = function(el){           //funkcja używana do pobrania zawartości notatki
         let textarea = el.querySelector('textarea');
+        let bar = el.querySelector('div');
         return{
             content: textarea.value,
             id: el.id,
@@ -64,7 +71,8 @@
             textarea: {
                 width: textarea.style.width,
                 height: textarea.style.height
-            }
+            },
+            barColor: bar.style.background
         };
     };
 
@@ -77,11 +85,13 @@
             colorBtnElement = document.createElement('button'),
             onSave,
             onDelete,
-            BOUNDARIES = 800,
+            onColorChange,
+            BOUNDARIES = 400,
             noteConfig = options || {             //domyslna konfiguracja NOWEJ notatki
                 content: '',
                 id: "sticker_" + new Date().getTime(),
-                transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)"
+                transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)",
+                barColor: '#169178'
             };
 
         onDelete = function(){
@@ -94,6 +104,12 @@
             );
         };
 
+        onColorChange = function(){
+            let random = Math.floor((Math.random() * 5) + 0);
+            console.log( colorArray[random]);
+            barElement.style.background = colorArray[random];
+        };
+
         if(noteConfig.textarea){
             textareaElement.style.width = noteConfig.textarea.width;
             textareaElement.style.height = noteConfig.textarea.height;
@@ -101,10 +117,12 @@
         }
 
         stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
+        barElement.style.background = noteConfig.barColor //przypisanie koloru
         textareaElement.value = noteConfig.content; //przypisanie wartości
 
         deleteBtnElement.addEventListener('click' , onDelete);
         saveBtnElement.addEventListener('click' , onSave);
+        colorBtnElement.addEventListener('click', onColorChange);
 
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
