@@ -76,6 +76,7 @@
                 width: textarea.style.width,
                 height: textarea.style.height
             },
+            dateColor: date.style.background,
             date: date.innerHTML
         };
     };
@@ -110,6 +111,7 @@
                 id: "sticker_" + new Date().getTime(),
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)",
                 barColor: '#169178',
+                dateColor: '#169178',
                 date: dateString
             };
 
@@ -126,6 +128,7 @@
         onColorChange = function(){
             let random = Math.floor((Math.random() * 5) + 0);
             barElement.style.background = colorArray[random];
+            dateElement.style.background = colorArray[random];
         };
 
         if(noteConfig.textarea){
@@ -141,6 +144,7 @@
         barElement.style.background = noteConfig.barColor; //przypisanie koloru
         titleElement.value = noteConfig.title;      //przypisanie tytułu
         dateElement.innerHTML = noteConfig.date;    //przypisanie daty
+        dateElement.style.background = noteConfig.dateColor; //przypisanie koloru diva daty
         textareaElement.value = noteConfig.content; //przypisanie wartości
 
         deleteBtnElement.addEventListener('click' , onDelete);

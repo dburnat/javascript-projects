@@ -53,6 +53,7 @@ body{
     background: #169178;
     right: 16px;
     font-size: 12px;
+    text-align: right;
 }
 
 .sticker .bar:hover{
