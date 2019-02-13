@@ -74,9 +74,10 @@
             textareaElement = document.createElement('textarea'),
             saveBtnElement = document.createElement('button'),
             deleteBtnElement = document.createElement('button'),
+            colorBtnElement = document.createElement('button'),
             onSave,
             onDelete,
-            BOUNDARIES = 400,
+            BOUNDARIES = 800,
             noteConfig = options || {             //domyslna konfiguracja NOWEJ notatki
                 content: '',
                 id: "sticker_" + new Date().getTime(),
@@ -107,6 +108,7 @@
 
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
+        colorBtnElement.classList.add('colorButton');
 
         stickerElement.style.transform = noteConfig.transformCSSValue;
         stickerElement.classList.add('sticker');
@@ -114,6 +116,7 @@
 
         barElement.appendChild(saveBtnElement);
         barElement.appendChild(deleteBtnElement);
+        barElement.appendChild(colorBtnElement);
 
         stickerElement.append(barElement);
         stickerElement.append(textareaElement);
@@ -144,6 +147,13 @@
 
         if(!testLocalStorage()){
             let mess = "You can't use localStorage";
+            
+            saveNote = function(){
+                console.warn(mess);
+            }
+            deleteNote = function(){
+                console.warn(mess);
+            }
         }
         else{
             saveNote = function(note){

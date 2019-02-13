@@ -5,8 +5,8 @@ body{
 .sticker{
     padding-top: 20px;
     background: #ffffff;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 300px;
+    min-width: 250px;
     position: absolute;
     left: 0;
     top: 0;
@@ -18,7 +18,7 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
+    height: 47px;
     background: #169178;
     width: 100%;
 }
@@ -26,8 +26,8 @@ body{
 .sticker textarea{
     padding: 3px 10px;
     box-sizing: border-box;
-    min-width: 100px;
-    min-height: 100px;
+    min-height: 300px;
+    min-width: 250px;
     background: transparent;
     border: none;
 }
@@ -42,29 +42,43 @@ body{
 }
 
 .deleteButton,
+.colorButton,
 .saveButton
 {
     border: none;
     position: absolute;
-    top: 2px;
-    height: 15px;
-    width: 15px;
+    top: 5px;
+    height: 32px;
+    width: 32px;
     cursor: pointer;
 }
 
 .deleteButton{
-    border-radius: 50%;
+    
     right: 5px;
-    background: #c90d07;
+    background-color: transparent;
+    background-image: url('img/x-button.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .saveButton{
     background-color: transparent;
-    background-image: url('img/save-icon.png');
+    background-image: url('img/save.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     left: 5px;
+}
+
+.colorButton{
+    background-color: transparent;
+    background-image: url('img/color-wheel.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    right: 42px;
 }
 
 .addNoteBtn {
