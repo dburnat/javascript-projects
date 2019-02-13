@@ -47,10 +47,16 @@
             posY = 0;
         }
         draggedElement.style.transform = 
-            "translateX(" + posX + "px) translateY(" + posY + "px)";           
+            "translateX(" + posX + "px) translateY(" + posY + "px)";    
+        draggedElement.style.zIndex = 1000;       
     };
 
     onDragEnd = function (){
+        if(!draggedElement){ //nic nie przeciagamy
+            return;
+        }
+
+        draggedElement.style.zIndex = 0;
         draggedElement = null;
         grabPointX = null;
         grabPointY = null;
@@ -116,7 +122,7 @@
                 barColor: '#169178',
                 dateColor: '#169178',
                 date: dateString,
-                zIndex: ''
+                zIndex: 0
             };
 
         onDelete = function(){
@@ -136,7 +142,7 @@
         };
 
         onPin = function(){
-            stickerElement.style.zIndex = 1;
+            stickerElement.style.zIndex = 50;
         };
 
         //zablokowanie opcji rozszerzania notatki jeśli zawiera coś w sobie
