@@ -60,8 +60,8 @@
 
     
 
-
-    getNoteObject = function(el){           //funkcja używana do pobrania zawartości notatki
+    //funkcja używana do pobrania zawartości notatki
+    getNoteObject = function(el){           
         let bar = el.querySelectorAll('div')[0];
         let date = el.querySelectorAll('div')[1];
         let title = el.querySelectorAll('textarea')[0];
@@ -80,7 +80,18 @@
         };
     };
 
-    createNote = function(options){             //parametr options bedzie wykorzystywany do ładowania notatek z pamieci
+    //parametr options bedzie wykorzystywany do ładowania notatek z pamieci
+    createNote = function(options){
+        let m = new Date();
+        let dateString =
+            m.getUTCFullYear() + "/" +
+            ("0" + (m.getUTCMonth()+1)).slice(-2) + "/" +
+            ("0" + m.getUTCDate()).slice(-2) + " " +
+            ("0" + m.getUTCHours()).slice(-2) + ":" +
+            ("0" + m.getUTCMinutes()).slice(-2) + ":" +
+            ("0" + m.getUTCSeconds()).slice(-2);
+        console.log(dateString);
+        
         let stickerElement = document.createElement('div'),
             barElement = document.createElement('div'),
             dateElement = document.createElement('div'),
@@ -99,7 +110,7 @@
                 id: "sticker_" + new Date().getTime(),
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)",
                 barColor: '#169178',
-                date: ''
+                date: dateString
             };
 
         onDelete = function(){
@@ -123,9 +134,13 @@
             textareaElement.style.resize = 'none';
         }
 
+        
+        
+
         stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
         barElement.style.background = noteConfig.barColor; //przypisanie koloru
-        titleElement.value = noteConfig.title;
+        titleElement.value = noteConfig.title;      //przypisanie tytułu
+        dateElement.innerHTML = noteConfig.date;    //przypisanie daty
         textareaElement.value = noteConfig.content; //przypisanie wartości
 
         deleteBtnElement.addEventListener('click' , onDelete);
@@ -137,6 +152,7 @@
         colorBtnElement.classList.add('colorButton');
         titleElement.classList.add('title');
         textareaElement.classList.add('textarea');
+        dateElement.classList.add('date');
 
         stickerElement.style.transform = noteConfig.transformCSSValue;
         stickerElement.classList.add('sticker');
@@ -149,6 +165,7 @@
         stickerElement.append(barElement);
         stickerElement.append(titleElement);
         stickerElement.append(textareaElement);
+        stickerElement.append(dateElement);
         
 
         stickerElement.addEventListener('mousedown', onDragStart, false);

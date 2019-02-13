@@ -46,9 +46,13 @@ body{
 }
 
 .sticker .date{
-    min-height: 30px;
+    min-height: 15px;
     border: none;
-    font-weight: 300;
+    font-weight: 500;
+    padding: 5px 10px 5px 145px;
+    background: #169178;
+    right: 16px;
+    font-size: 12px;
 }
 
 .sticker .bar:hover{
