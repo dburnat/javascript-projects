@@ -62,23 +62,29 @@
 
 
     getNoteObject = function(el){           //funkcja używana do pobrania zawartości notatki
-        let textarea = el.querySelector('textarea');
-        let bar = el.querySelector('div');
+        let bar = el.querySelectorAll('div')[0];
+        let date = el.querySelectorAll('div')[1];
+        let title = el.querySelectorAll('textarea')[0];
+        let textarea = el.querySelectorAll('textarea')[1];
         return{
+            title: title.value,
             content: textarea.value,
             id: el.id,
+            barColor: bar.style.background,
             transformCSSValue: el.style.transform,
             textarea: {
                 width: textarea.style.width,
                 height: textarea.style.height
             },
-            barColor: bar.style.background
+            date: date.innerHTML
         };
     };
 
     createNote = function(options){             //parametr options bedzie wykorzystywany do ładowania notatek z pamieci
         let stickerElement = document.createElement('div'),
             barElement = document.createElement('div'),
+            dateElement = document.createElement('div'),
+            titleElement = document.createElement('textarea'),
             textareaElement = document.createElement('textarea'),
             saveBtnElement = document.createElement('button'),
             deleteBtnElement = document.createElement('button'),
@@ -88,10 +94,12 @@
             onColorChange,
             BOUNDARIES = 400,
             noteConfig = options || {             //domyslna konfiguracja NOWEJ notatki
+                title: '',
                 content: '',
                 id: "sticker_" + new Date().getTime(),
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)",
-                barColor: '#169178'
+                barColor: '#169178',
+                date: ''
             };
 
         onDelete = function(){
@@ -106,7 +114,6 @@
 
         onColorChange = function(){
             let random = Math.floor((Math.random() * 5) + 0);
-            console.log( colorArray[random]);
             barElement.style.background = colorArray[random];
         };
 
@@ -117,7 +124,8 @@
         }
 
         stickerElement.id = noteConfig.id;      //przypisanie identyfikatora
-        barElement.style.background = noteConfig.barColor //przypisanie koloru
+        barElement.style.background = noteConfig.barColor; //przypisanie koloru
+        titleElement.value = noteConfig.title;
         textareaElement.value = noteConfig.content; //przypisanie wartości
 
         deleteBtnElement.addEventListener('click' , onDelete);
@@ -127,6 +135,8 @@
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
         colorBtnElement.classList.add('colorButton');
+        titleElement.classList.add('title');
+        textareaElement.classList.add('textarea');
 
         stickerElement.style.transform = noteConfig.transformCSSValue;
         stickerElement.classList.add('sticker');
@@ -137,7 +147,9 @@
         barElement.appendChild(colorBtnElement);
 
         stickerElement.append(barElement);
+        stickerElement.append(titleElement);
         stickerElement.append(textareaElement);
+        
 
         stickerElement.addEventListener('mousedown', onDragStart, false);
 
