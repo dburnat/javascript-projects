@@ -61,7 +61,8 @@
     
 
     //funkcja używana do pobrania zawartości notatki
-    getNoteObject = function(el){           
+    getNoteObject = function(el){
+        let stickerzIndex = el.style.zIndex;       
         let bar = el.querySelectorAll('div')[0];
         let date = el.querySelectorAll('div')[1];
         let title = el.querySelectorAll('textarea')[0];
@@ -77,7 +78,8 @@
                 height: textarea.style.height
             },
             dateColor: date.style.background,
-            date: date.innerHTML
+            date: date.innerHTML,
+            zIndex: stickerzIndex
         };
     };
 
@@ -91,7 +93,6 @@
             ("0" + m.getUTCHours()).slice(-2) + ":" +
             ("0" + m.getUTCMinutes()).slice(-2) + ":" +
             ("0" + m.getUTCSeconds()).slice(-2);
-        console.log(dateString);
         
         let stickerElement = document.createElement('div'),
             barElement = document.createElement('div'),
@@ -101,9 +102,11 @@
             saveBtnElement = document.createElement('button'),
             deleteBtnElement = document.createElement('button'),
             colorBtnElement = document.createElement('button'),
+            pinBtnElement = document.createElement('button'),
             onSave,
             onDelete,
             onColorChange,
+            onPin,
             BOUNDARIES = 400,
             noteConfig = options || {             //domyslna konfiguracja NOWEJ notatki
                 title: '',
@@ -112,7 +115,8 @@
                 transformCSSValue: "translateX(" + Math.random() * BOUNDARIES + "px) translateY(" + Math.random() * BOUNDARIES + "px)",
                 barColor: '#169178',
                 dateColor: '#169178',
-                date: dateString
+                date: dateString,
+                zIndex: ''
             };
 
         onDelete = function(){
@@ -131,6 +135,11 @@
             dateElement.style.background = colorArray[random];
         };
 
+        onPin = function(){
+            stickerElement.style.zIndex = 1;
+        };
+
+        //zablokowanie opcji rozszerzania notatki jeśli zawiera coś w sobie
         if(noteConfig.textarea){
             textareaElement.style.width = noteConfig.textarea.width;
             textareaElement.style.height = noteConfig.textarea.height;
@@ -146,14 +155,17 @@
         dateElement.innerHTML = noteConfig.date;    //przypisanie daty
         dateElement.style.background = noteConfig.dateColor; //przypisanie koloru diva daty
         textareaElement.value = noteConfig.content; //przypisanie wartości
+        stickerElement.style.zIndex = noteConfig.zIndex; //przypisanie zindex
 
         deleteBtnElement.addEventListener('click' , onDelete);
         saveBtnElement.addEventListener('click' , onSave);
         colorBtnElement.addEventListener('click', onColorChange);
+        pinBtnElement.addEventListener('click' , onPin);
 
         saveBtnElement.classList.add('saveButton');
         deleteBtnElement.classList.add('deleteButton');
         colorBtnElement.classList.add('colorButton');
+        pinBtnElement.classList.add('pinButton');
         titleElement.classList.add('title');
         textareaElement.classList.add('textarea');
         dateElement.classList.add('date');
@@ -163,6 +175,7 @@
         barElement.classList.add('bar');
 
         barElement.appendChild(saveBtnElement);
+        barElement.appendChild(pinBtnElement);
         barElement.appendChild(deleteBtnElement);
         barElement.appendChild(colorBtnElement);
 
