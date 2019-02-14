@@ -142,7 +142,10 @@
         };
 
         onPin = function(){
-            stickerElement.style.zIndex = 50;
+            if(stickerElement.style.zIndex == 50)
+                stickerElement.style.zIndex = 0;
+            else   
+                stickerElement.style.zIndex = 50;
         };
 
         //zablokowanie opcji rozszerzania notatki jeśli zawiera coś w sobie
