@@ -21,9 +21,6 @@ let name = prompt('What is your name?'); //asking user for a name
 
 // 3. Wyświetlenie na mapie markera w postaci własnego avatara w geolokalizacji użytkownika.
 
-// 5. Spięcie własnego markera z udostępnionym (dane poniżej) serwerem Websocket w celu utworzenia gry w gonienie się po mapie (można przetestować z np. dwóch przeglądarek). 
-// 6. Opracowanie protokołu komunikacji filtrującego niechciane komunikaty (np. od innej aplikacji korzystającej z tego samego serwera) - np. prywatne mapy.
-
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -34.397, lng: 150.644 },
@@ -107,6 +104,7 @@ function moveMarker(key) {
    // console.log("maplng" + map.center.lng());
     marker.setPosition({ lat, lng });
 
+    
 
     moveData = {
         type: "cordsData",
@@ -131,7 +129,7 @@ sock.onopen = function(e){
 
 
 sock.onmessage = function(event){
-    console.log(event);
+    //console.log(event);
     let json = JSON.parse(event.data);
     if(json.type == "chat"){
         console.log(json.type);
@@ -139,7 +137,12 @@ sock.onmessage = function(event){
     }
 
     else if(json.type == "cordsData"){
-        console.log(json.type + " " + json.id + " " + json.lat +" " + json.lng)
+        if (!players["user" + json.id]) 
+            addNewMarkers(json.id , json.id, json.lat ,json.lng);
+         else if(players["user" + json.id] )
+            updatePositionOfPlayer(json.id, json.lat, json.lng);
+
+   //console.log(json.type + " " + json.id + " " + json.lat +" " + json.lng)
     }
 };
 
@@ -153,21 +156,27 @@ document.querySelector('button').onclick = function(){
     log.innerHTML += "You: " + text + "<br>";
 };
 
-refreshFrequency = 100;
+refreshFrequency = 1000;
 function sendPosition(){
     setTimeout(sendPosition, refreshFrequency);
     if(moveData)
         sock.send(JSON.stringify(moveData));
 }
 
-
 // Adds a marker to the map and pushes it into markers array
-function addNewMarkers(latNew, lngNew, playerName) {
-  var marker = new google.maps.Marker({
+function addNewMarkers(playerID, playerName, latNew, lngNew) {
+    players["user" + playerID] = new google.maps.Marker({
     position: { lat: latNew, lng: lngNew },
     map: map,
     icon: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
     label: playerName
   });
   markers.push(marker);
+}
+
+function updatePositionOfPlayer(playerID, latUpd, lngUpd){
+    players["user" + playerID].setPosition({
+        lat: latUpd,
+        lng: lngUpd
+    });
 }
