@@ -28,7 +28,6 @@ function initMap() {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 12,
         keyboardShortcuts: false,
-        disableDefaultUI: true
     });
     marker = new google.maps.Marker({
         position: { lat: -34.397, lng: 150.644 },
@@ -39,22 +38,8 @@ function initMap() {
     });  
     getLocalization();
     addKeyboardEvent();
+
 };
-
-
-
-
-//ustawianie nakładki google maps
-function setOverlay() {
-    overlay = new google.maps.OverlayView();
-    if (!overlay) setTimeout(setOverlay, 500);
-    else {
-        overlay.draw = function () {};
-        overlay.setMap(map);
-    }
-}
-
-
 
 function getLocalization() {
     navigator.geolocation.getCurrentPosition(geoOk, geoFail);
@@ -76,11 +61,21 @@ function addKeyboardEvent() {
 }
 
 btn.addEventListener('click' , sendText);
+
+
+
+function centerMapOnMarker(){
+    //{lat: -34, lng: 151}
+    let latMarker = marker.getPosition().lat();
+    let lngMarker = marker.getPosition().lng(); 
+    let bounds = map.LatLngBounds();
+    if (bounds.contain({lat: latMarker  , lng: lngMarker} ))
+        console.log('kappa');
+}
 //function used
 function moveMarker(key) {
-    let lat = marker.getPosition().lat();
-    let lng = marker.getPosition().lng();
-    let bounds = map.getBounds();
+let lat = marker.getPosition().lat();
+let lng = marker.getPosition().lng(); 
     switch (key.code) {
         case 'ArrowUp':
             lat += 0.01;
@@ -94,6 +89,12 @@ function moveMarker(key) {
         case 'ArrowLeft':
             lng -= 0.01;
             break;
+        case 'Enter':
+            sendText();
+            break;
+        case 'Backquote':
+            sendPosition();
+            break;
         default:
             break;
     }
@@ -106,7 +107,7 @@ function moveMarker(key) {
         lng: lng,
         id: name
     }
-    sendPosition();
+    //centerMapOnMarker();
 }
 
 
@@ -138,7 +139,7 @@ sock.onmessage = function(event){
 };
 
 
-refreshFrequency = 300;
+refreshFrequency = 100;
 function sendPosition(){
     setTimeout(sendPosition, refreshFrequency);
     if(moveData)
