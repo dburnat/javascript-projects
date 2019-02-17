@@ -1,21 +1,23 @@
 var map;
 
 let data,
-    url = 'ws://localhost:8080',
-    sock = new WebSocket(url),
-    sendMessage,
-    moveData,
-    marker,
-    marker1,
-    gameName = 'catchme',
-    refreshFrequency,
-    players = {},
-    overlay,
-    cordsData,
-    markers = [];
+url = 'ws://localhost:8080',
+sock = new WebSocket(url),
+sendMessage,
+moveData,
+marker,
+marker1,
+gameName = 'catchme',
+refreshFrequency,
+players = {},
+overlay,
+cordsData,
+markers = [];
 
-let log = document.getElementById('log')
+let log = document.getElementById('log');
+let btn = document.getElementById('sendbutton');
 let name = prompt('What is your name?'); //asking user for a name
+
 
 // Funkcjonalności:
 
@@ -59,7 +61,7 @@ function getLocalization() {
 }
 
 function geoOk(data) {
-
+    
     let coords = { lat: data.coords.latitude, lng: data.coords.longitude }
     map.setCenter(coords);
     marker.setPosition(coords);
@@ -73,39 +75,30 @@ function addKeyboardEvent() {
     window.addEventListener('keydown', moveMarker);
 }
 
+btn.addEventListener('click' , sendText);
+//function used
 function moveMarker(key) {
     let lat = marker.getPosition().lat();
     let lng = marker.getPosition().lng();
     let bounds = map.getBounds();
-
-
     switch (key.code) {
         case 'ArrowUp':
             lat += 0.01;
-            sendPosition();
             break;
         case 'ArrowDown':
             lat -= 0.01;
-            sendPosition();
             break;
         case 'ArrowRight':
             lng += 0.01;
-            sendPosition();
             break;
         case 'ArrowLeft':
             lng -= 0.01;
-            sendPosition();
             break;
         default:
             break;
     }
-    console.log("lat:" + lat);
-    console.log("lng" + lng);
-   // console.log("maplng" + map.center.lng());
     marker.setPosition({ lat, lng });
-
-    
-
+    //array with data to send
     moveData = {
         type: "cordsData",
 
@@ -113,13 +106,13 @@ function moveMarker(key) {
         lng: lng,
         id: name
     }
-    
+    sendPosition();
 }
 
 
 //websocket part
 
-
+//sending username
 sock.onopen = function(e){
     sock.send(JSON.stringify({
         type: "name",           //what do we want to send
@@ -127,43 +120,32 @@ sock.onopen = function(e){
     }));
 };
 
-
+//handling communication
 sock.onmessage = function(event){
-    //console.log(event);
     let json = JSON.parse(event.data);
+    //handling chat
     if(json.type == "chat"){
         console.log(json.type);
         log.innerHTML += json.name + ": " + json.data +"<br>";
     }
-
+    //handling coordinates
     else if(json.type == "cordsData"){
-        if (!players["user" + json.id]) 
+        if (!players["user" + json.id]) //if user doesnt exist create new marker
             addNewMarkers(json.id , json.id, json.lat ,json.lng);
-         else if(players["user" + json.id] )
+         else if(players["user" + json.id] ) //if user exists only update his position
             updatePositionOfPlayer(json.id, json.lat, json.lng);
-
-   //console.log(json.type + " " + json.id + " " + json.lat +" " + json.lng)
     }
 };
 
 
-document.querySelector('button').onclick = function(){
-    var text = document.getElementById('text').value;
-    sock.send(JSON.stringify({
-        type: "chat",
-        data: text
-    }));
-    log.innerHTML += "You: " + text + "<br>";
-};
-
-refreshFrequency = 1000;
+refreshFrequency = 300;
 function sendPosition(){
     setTimeout(sendPosition, refreshFrequency);
     if(moveData)
         sock.send(JSON.stringify(moveData));
 }
 
-// Adds a marker to the map and pushes it into markers array
+// adds a marker to the map and pushes it into markers array
 function addNewMarkers(playerID, playerName, latNew, lngNew) {
     players["user" + playerID] = new google.maps.Marker({
     position: { lat: latNew, lng: lngNew },
@@ -174,9 +156,22 @@ function addNewMarkers(playerID, playerName, latNew, lngNew) {
   markers.push(marker);
 }
 
+//function used to update positionofplayer
 function updatePositionOfPlayer(playerID, latUpd, lngUpd){
     players["user" + playerID].setPosition({
         lat: latUpd,
         lng: lngUpd
     });
+}
+
+//function used to send text
+function sendText(){
+    let text = document.getElementById('text');
+    console.log(text.value);
+    sock.send(JSON.stringify({
+        type: "chat",
+        data: text.value
+    }));
+    log.innerHTML += "You: " + text.value + "<br>";
+    text.value = '';
 }
