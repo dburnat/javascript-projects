@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Keyboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&amp;subset=latin-ext" rel="stylesheet">
+</head>
+<body> 
+    
+    
+<div class="wrapper">
+    
+    <section class="sound-clips">
+    <div class="clip" >
+            <h1>Clip 1</h1>
+            <div class="buttons">
+                <button class="rec button" id="clip1rec">
+                <button class="play button" id="clip1play">
+                <button class="stop button" id="clipstop">
+            </div>
+    </div>
+    <div class="clip" >
+            <h1>Clip 2</h1>
+            <div class="buttons">
+                <button class="rec button" id="clip2rec">
+                <button class="play button" id="clip2play">
+                <button class="stop button" id="clipstop">
+            </div>
+    </div>
+    <div class="clip" >
+            <h1>Clip 3</h1>
+            <div class="buttons">
+                <button class="rec button" id="clip3rec">
+                <button class="play button" id="clip3play">
+                <button class="stop button" id="clip3stop">
+            </div>
+    </div>
+    <div class="clip" >
+            <h1>Clip 4</h1>
+            <div class="buttons">
+                <button class="rec button" id="clip4rec">
+                <button class="play button" id="clip4play">
+                <button class="stop button" id="clip1stop">
+            </div>
+    </div>
+    
+    </section>
+    
+    <div class="keys">
+        <div class="key" id="q">Q</div>
+        <div class="key" id="w">W</div>
+        <div class="key" id="e">E</div>
+        <div class="key" id="r">R</div>
+    </div>
+
+    <div class="sounds">
+    <audio class="clip" src="sound/1.wav" controls id="sound1"></audio>  <!-- q-113 -->
+    <audio class="clip" src="sound/2.wav" controls id="sound2"></audio>  <!-- w-119 -->
+    <audio class="clip" src="sound/3.wav" controls id="sound3"></audio>  <!-- e-101 -->
+    <audio class="clip" src="sound/4.wav" controls id="sound4"></audio>  <!-- r-114 --> <!-- https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Using_the_MediaStream_Recording_API -->
+    </div>
+</div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
