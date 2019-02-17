@@ -22,27 +22,6 @@ let name = prompt('What is your name?'); //asking user for a name
 // 5. Spięcie własnego markera z udostępnionym (dane poniżej) serwerem Websocket w celu utworzenia gry w gonienie się po mapie (można przetestować z np. dwóch przeglądarek). 
 // 6. Opracowanie protokołu komunikacji filtrującego niechciane komunikaty (np. od innej aplikacji korzystającej z tego samego serwera) - np. prywatne mapy.
 
-// document.getElementById('file').onchange = function (evt) {
-//     var tgt = evt.target || window.event.srcElement,
-//         files = tgt.files;
-
-//     // FileReader support
-//     if (FileReader && files && files.length) {
-//         var fr = new FileReader();
-//         fr.onload = function () {
-//             document.getElementById(img).src = fr.result;
-//         }
-//         fr.readAsDataURL(files[0]);
-//     }
-
-//     // Not supported
-//     else {
-//         // fallback -- perhaps submit the input to an iframe and temporarily store
-//         // them on the server until the user's session ends.
-//     }
-// }
-
-
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -34.397, lng: 150.644 },
@@ -62,7 +41,7 @@ function initMap() {
 
 }
 
-                //ustawianie nakładki google maps
+//ustawianie nakładki google maps
 function setOverlay() {
     overlay = new google.maps.OverlayView();
     if (!overlay) setTimeout(setOverlay, 500);
