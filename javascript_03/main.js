@@ -10,7 +10,8 @@ let data,
     gameName = 'catchme',
     refreshFrequency,
     players = {},
-    overlay;
+    overlay,
+    cordsData;
 
 let log = document.getElementById('log')
 let name = prompt('What is your name?'); //asking user for a name
@@ -101,12 +102,13 @@ function moveMarker(key) {
 
 
     moveData = {
-        app: gameName,
+        type: "cordsData",
 
         lat: lat,
         lng: lng,
         id: name
     }
+    sendPosition();
 }
 
 
@@ -124,7 +126,7 @@ sock.onopen = function(e){
 sock.onmessage = function(event){
     console.log(event);
     let json = JSON.parse(event.data);
-
+    
     log.innerHTML += json.name + ": " + json.data +"<br>";
 };
 
@@ -132,15 +134,15 @@ sock.onmessage = function(event){
 document.querySelector('button').onclick = function(){
     var text = document.getElementById('text').value;
     sock.send(JSON.stringify({
-        type: "message",
+        type: "chat",
         data: text
     }));
     log.innerHTML += "You: " + text + "<br>";
 };
 
-refreshFrequency = 100;
+refreshFrequency = 10000;
 function sendPosition(){
-    setTimeout(sendPosition, sendFrequency);
+    setTimeout(sendPosition, refreshFrequency);
     if(moveData)
         sock.send(JSON.stringify(moveData));
 }

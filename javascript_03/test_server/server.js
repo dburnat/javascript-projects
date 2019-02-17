@@ -5,21 +5,25 @@ wss.on('connection', function (ws) {
   ws.on('message', function(message) {
 
     message = JSON.parse(message);
-
     if(message.type == "name"){
         ws.personName =  message.data;
         return;
+      }
+
+    if(message.type == "chat"){      
+      wss.clients.forEach(function e(client){
+        if(client != ws)
+              client.send(JSON.stringify({
+                name: ws.personName,
+                data: message.data
+              }
+          ));
+      });
     }
-    console.log('received: %s', message.data);
-    
-    wss.clients.forEach(function e(client){
-      if(client != ws )
-        client.send(JSON.stringify({
-          name: ws.personName,
-          data: message.data
-        }
-        ));
-    });
+    else if(message.type == "cordsData"){
+      console.log('kappa');
+    }
+
   });
 
   ws.on('close', function () {
