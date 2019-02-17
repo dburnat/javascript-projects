@@ -1,27 +1,24 @@
 var map;
 
 let data,
-url = 'ws://localhost:8080',
-sock = new WebSocket(url),
-sendMessage,
-moveData,
-marker,
-marker1,
-gameName = 'catchme',
-refreshFrequency,
-players = {},
-overlay,
-cordsData,
-markers = [];
+    url = 'ws://localhost:8080',
+    sock = new WebSocket(url),
+    sendMessage,
+    moveData,
+    marker,
+    gameName = 'catchme',
+    refreshFrequency,
+    players = {},
+    overlay,
+    cordsData,
+    markers = [],
+    customMarker;
 
 let log = document.getElementById('log');
-let btn = document.getElementById('sendbutton');
+let sendBtn = document.getElementById('sendbutton');
+let locBtn = document.getElementById('locBtn');
 let name = prompt('What is your name?'); //asking user for a name
 
-
-// Funkcjonalności:
-
-// 3. Wyświetlenie na mapie markera w postaci własnego avatara w geolokalizacji użytkownika.
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -60,8 +57,8 @@ function addKeyboardEvent() {
     window.addEventListener('keydown', moveMarker);
 }
 
-btn.addEventListener('click' , sendText);
-
+sendBtn.addEventListener('click' , sendText);
+locBtn.addEventListener('click' , sendPosition);
 
 
 function centerMapOnMarker(){
@@ -132,9 +129,9 @@ sock.onmessage = function(event){
     //handling coordinates
     else if(json.type == "cordsData"){
         if (!players["user" + json.id]) //if user doesnt exist create new marker
-            addNewMarkers(json.id , json.id, json.lat ,json.lng);
+           setTimeout(function() {addNewMarkers(json.id , json.id, json.lat ,json.lng)}, 1000);
          else if(players["user" + json.id] ) //if user exists only update his position
-            updatePositionOfPlayer(json.id, json.lat, json.lng);
+           updatePositionOfPlayer(json.id, json.lat, json.lng);
     }
 };
 
