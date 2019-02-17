@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="main.css">
+	</head>
+	<body>
+		<div class="content">
+			<input type="file" name="nazwa" id="file" />
+			<a id="downloadLnk" download="YourFileName.jpg" class="button">Zapisz</a>
+
+			<canvas id="canvas" width="500" height="300"></canvas>
+
+			<fieldset class="filters">
+			    <legend><h3>Filtry</h3></legend>
+
+			    <label for="brightness">Jasność</label>
+			    <input type="range" id="brightness" name="brightness" min="-50" max="50" value="0"/>
+
+			    <label for="saturation">Saturacja</label>
+			    <input type="range" id="saturation" name="saturation" min="0" max="100" value="50"/>
+
+				<label for="contrast">Kontrast</label>
+			    <input type="range" id="contrast" name="contraste" min="-50" max="50" value="0" />
+			</fieldset>
+
+			<fieldset class="filters">
+				<legend><h3>Pędzel</h3></legend>
+				<div class="container">
+					<div class="tile" style="background-color: #FF3333;"></div>
+					<div class="tile" style="background-color: #FFAC33;"></div>
+					<div class="tile" style="background-color: #FFF633;"></div>
+					<div class="tile" style="background-color: #A2FF33;"></div>
+					<div class="tile" style="background-color: #39FF33;"></div>
+					<div class="tile" style="background-color: #33FF93;"></div>
+					<div class="tile" style="background-color: #33FFF0;"></div>
+					<div class="tile" style="background-color: #33B8FF;"></div>
+					<div class="tile" style="background-color: #3355FF;"></div>
+					<div class="tile" style="background-color: #7A33FF;"></div>
+					<div class="tile" style="background-color: #DA33FF;"></div>
+					<div class="tile" style="background-color: #E90000;"></div>
+				</div>
+			</fieldset>
+		</div>
+
+	
+		<script src="main.js" ></script>
+	</body>
+</html>
