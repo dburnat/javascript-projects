@@ -11,7 +11,8 @@ let data,
     refreshFrequency,
     players = {},
     overlay,
-    cordsData;
+    cordsData,
+    markers = [];
 
 let log = document.getElementById('log')
 let name = prompt('What is your name?'); //asking user for a name
@@ -39,8 +40,10 @@ function initMap() {
     });  
     getLocalization();
     addKeyboardEvent();
+};
 
-}
+
+
 
 //ustawianie nakładki google maps
 function setOverlay() {
@@ -82,21 +85,25 @@ function moveMarker(key) {
     switch (key.code) {
         case 'ArrowUp':
             lat += 0.01;
+            sendPosition();
             break;
         case 'ArrowDown':
             lat -= 0.01;
+            sendPosition();
             break;
         case 'ArrowRight':
             lng += 0.01;
+            sendPosition();
             break;
         case 'ArrowLeft':
             lng -= 0.01;
+            sendPosition();
             break;
         default:
             break;
     }
-    //console.log("lat:" + lat);
-    //console.log("lng" + lng);
+    console.log("lat:" + lat);
+    console.log("lng" + lng);
    // console.log("maplng" + map.center.lng());
     marker.setPosition({ lat, lng });
 
@@ -108,7 +115,7 @@ function moveMarker(key) {
         lng: lng,
         id: name
     }
-    sendPosition();
+    
 }
 
 
@@ -126,8 +133,14 @@ sock.onopen = function(e){
 sock.onmessage = function(event){
     console.log(event);
     let json = JSON.parse(event.data);
-    
-    log.innerHTML += json.name + ": " + json.data +"<br>";
+    if(json.type == "chat"){
+        console.log(json.type);
+        log.innerHTML += json.name + ": " + json.data +"<br>";
+    }
+
+    else if(json.type == "cordsData"){
+        console.log(json.type + " " + json.id + " " + json.lat +" " + json.lng)
+    }
 };
 
 
@@ -140,9 +153,21 @@ document.querySelector('button').onclick = function(){
     log.innerHTML += "You: " + text + "<br>";
 };
 
-refreshFrequency = 10000;
+refreshFrequency = 100;
 function sendPosition(){
     setTimeout(sendPosition, refreshFrequency);
     if(moveData)
         sock.send(JSON.stringify(moveData));
+}
+
+
+// Adds a marker to the map and pushes it into markers array
+function addNewMarkers(latNew, lngNew, playerName) {
+  var marker = new google.maps.Marker({
+    position: { lat: latNew, lng: lngNew },
+    map: map,
+    icon: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+    label: playerName
+  });
+  markers.push(marker);
 }
