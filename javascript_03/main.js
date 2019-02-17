@@ -6,13 +6,14 @@ let data,
     sendMessage,
     moveData,
     marker,
-    gameName = 'catchme',
+    gameName = 'catchme',           //nameoftheapp
     refreshFrequency,
     players = {},
     overlay,
     cordsData,
     markers = [],
-    customMarker;
+    customMarker,
+    refreshFrequency = 1000;        //frequency of sending coords
 
 let log = document.getElementById('log');
 let sendBtn = document.getElementById('sendbutton');
@@ -128,15 +129,16 @@ sock.onmessage = function(event){
     }
     //handling coordinates
     else if(json.type == "cordsData"){
-        if (!players["user" + json.id]) //if user doesnt exist create new marker
-           setTimeout(function() {addNewMarkers(json.id , json.id, json.lat ,json.lng)}, 1000);
+        if (!players["user" + json.id]){ //if user doesnt exist create new marker
+            addNewMarkers(json.id , json.id, json.lat ,json.lng);
+        }
          else if(players["user" + json.id] ) //if user exists only update his position
            updatePositionOfPlayer(json.id, json.lat, json.lng);
     }
 };
 
 
-refreshFrequency = 100;
+
 function sendPosition(){
     setTimeout(sendPosition, refreshFrequency);
     if(moveData)
